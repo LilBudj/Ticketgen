@@ -1,0 +1,39 @@
+.window{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #e990f9;
+    border-radius: 44px;
+    width: 503px;
+    height: 379px;
+    font-family: "San Frans", sans-serif;
+}
+
+.bearImg{
+    width: 160px;
+    height: 150px;
+    margin-top: 77px;
+}
+
+.logButton{
+    outline: none;
+    border-radius: 36px;
+    border: 2px solid white;
+    background-color: #e990f9;
+    color: white;
+    margin-bottom: 36px;
+    height: 60px;
+    width: 151px;
+}
+
+.textField{
+    outline: none;
+    border: none;
+    width: 70%;
+    height: 30px;
+    border-radius: 7px;
+    box-shadow: 0 0 5px #555;
+    font-weight: 700;
+    font-size: 14px;
+}

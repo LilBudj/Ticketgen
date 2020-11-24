@@ -1,0 +1,89 @@
+.container{
+    display: flex;
+    justify-content: space-between;
+    height: 116px;
+    width: 100%;
+    background-color: #7ed321;
+    position: fixed;
+    top: 0;
+}
+
+
+.logo{
+    margin: 30px 0 30px 37px;
+}
+
+.logoImg{
+    height: 56px;
+    width: 147px
+}
+.filterImg{
+    width: 39px;
+    height: 39px;
+}
+.mobileNav{
+    display: none;
+}
+
+.navbar{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 410px;
+    padding: 0 30px 0 30px;
+}
+
+.dateContainer{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 176px;
+    margin-right: 45px;
+    font-size: 13px;
+    color: #777;
+}
+.dateInput{
+    height: 31px;
+    width: 100px;
+    background-color: #fff;
+}
+
+.link{
+    font-size: 16px;
+    font-weight: 700;
+    font-family: "San Frans", sans-serif;
+    color: white;
+}
+.link:hover{
+    text-decoration: none;
+    color: #bbbbbb
+}
+.expandedLink{
+    font-size: 16px;
+    font-weight: 700;
+    font-family: "San Frans", sans-serif;
+    color: #7ed321;
+}
+.expandedLink:hover{
+    text-decoration: none;
+    color: #5aa104;
+}
+
+.activeLink{
+    text-decoration: underline;
+    color: white
+}
+.expandedActiveLink{
+    text-decoration: underline;
+    color: #7ed321;
+}
+
+@media screen and (max-width: 480px){
+    .mobileNav{
+        display: block;
+        width: 60px
+    }
+    .link{
+        display: none;
+    }
+}

@@ -1,0 +1,19 @@
+.appContainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+.content{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    min-height: calc(100vh - 116px)
+}
+
+@media screen and (max-width: 600px){
+    .content{
+        min-height: 100vh;
+    }
+}
