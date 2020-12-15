@@ -19,7 +19,7 @@ class EventsContainer extends React.Component{
     render() {
         let eventsArray = this.props.events.map(j => {
             if (this.props.filter.isFilter) {
-                if (Date.parse(this.props.filter.fromDate) < (j.date * 1000) && Date.parse(this.props.filter.toDate) > (j.date * 1000)) {
+                if (Date.parse(this.props.filter.fromDate) < (Date.parse(j.startDate)) && Date.parse(this.props.filter.toDate) > (Date.parse(j.startDate))) {
                     return <JogNote {...j} submitJogDelete={this.props.submitJogDelete} key={j.id}/>
                 }
             }
@@ -53,11 +53,6 @@ class EventsContainer extends React.Component{
                 </div>}
                 {this.props.events.length ? <div className={style.jogsContainer}>
                     {eventsArray}
-                    {/*<LoadButton*/}
-                    {/*    onClick={this.loadExtraJogs}*/}
-                    {/*>*/}
-                    {/*    Load more jogs*/}
-                    {/*</LoadButton>*/}
             </div>: <div className={style.emptyStack}>
                     <div className={style.emptyMessage}>
                         <img className={style.sadImage} src={sad} alt={'sad'}/>

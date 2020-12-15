@@ -112,7 +112,7 @@ export const jogReducer = (state = initState, action) => {
         };
         case ADD_CARD: return {
             ...state,
-            cards: [...state.cards, ...action.cards]
+            cards: [action.card]
         };
         case REMOVE_CARD: return {
             ...state,
@@ -122,7 +122,7 @@ export const jogReducer = (state = initState, action) => {
             return {
                 ...state,
                 seats: state.seats.map(s => {
-                    if (action.ticket.seatIds.includes(s.id)){
+                    if (action.ticket.seatsIds.includes(s.id)){
                         return {...s, status: true}
                     }
                     else return s
@@ -136,12 +136,6 @@ export const jogReducer = (state = initState, action) => {
         case CANCEL_ORDER: {
             return {
                 ...state,
-                seats: state.seats.map(s => {
-                    if (!!state.accountData.orders.filter(o => o.seats.includes(s.id)).length){
-                        return {...s, status: false}
-                    }
-                    else return s
-                }),
                 accountData: {
                     ...state.accountData,
                     orders: []
@@ -183,15 +177,15 @@ export const jogReducer = (state = initState, action) => {
                 isAdmin: action.isAdmin
             }
         }
-        case SET_ACC_DATA: return {
+        case SET_ACC_DATA: {
+            console.log(state, action)
+            return {
             ...state,
             accountData: {
                 ...state.accountData,
-                ...state.loginData,
-                isAdmin: action.accData.isAdmin,
-                orders: action.accData.orders
+                ...action.accData
             }
-        }
+        }}
         case LOG_OUT: {
             localStorage.removeItem('token')
             return {
@@ -237,7 +231,7 @@ const dispatchSeats = (seats) => ({type: DISPATCH_SEATS, seats});
 export const setFromDate = (fromDate) => ({type: SET_FILTER_FROM_DATE, fromDate});
 export const setToDate = (toDate) => ({type: SET_FILTER_TO_DATE, toDate});
 export const toggleFilter = () => ({type: TOGGLE_FILTER});
-const dispatchCard = (cards) => ({type: ADD_CARD, cards});
+const dispatchCard = (card) => ({type: ADD_CARD, card});
 const unhandleCard = (cardNumber) => ({type: REMOVE_CARD, cardNumber})
 const purchaseSeats = (ticket) => ({type: PURCHASE_SEATS, ticket});
 const cancelOrder = () => ({type: CANCEL_ORDER});
@@ -267,6 +261,7 @@ export const logInUser = () => (
             }
         }
         catch (e) {
+            console.log(e)
             dispatch(loginError())
         }
     }
@@ -289,6 +284,7 @@ export const fetchEvents = () => (
             }
         }
         catch (e) {
+            console.log(e)
             dispatch(setAuthError())
         }
     }
@@ -302,6 +298,7 @@ export const fetchEvent = (id) => (
             }
         }
         catch (e) {
+            console.log(e)
             dispatch(setAuthError())
         }
     }
@@ -311,10 +308,11 @@ export const fetchCards = () => (
         try {
             let result = await API.fetchCard()
             if (result.status === 200) {
-                dispatch(dispatchCard(result.data.cards))
+                dispatch(dispatchCard(result.data.card))
             }
         }
         catch (e) {
+            console.log(e)
             dispatch(setAuthError())
         }
     }
@@ -324,10 +322,11 @@ export const addCard = (cardData) => (
         try {
             let result = await API.addCard(cardData)
             if (result.status === 200) {
-                dispatch(dispatchCard([cardData]))
+                dispatch(dispatchCard(cardData))
             }
         }
         catch (e) {
+            console.log(e)
             dispatch(setAuthError())
         }
     }
@@ -341,6 +340,7 @@ export const removeCard = (cardNumber) => (
             }
         }
         catch (e) {
+            console.log(e)
             dispatch(setAuthError())
         }
     }
@@ -354,19 +354,21 @@ export const deleteAccount = () => (
             }
         }
         catch (e) {
+            console.log(e)
             dispatch(setAuthError())
         }
     }
 );
-export const purchaseOperation = (seatIds, showId) => (
+export const purchaseOperation = (seatsIds, showId) => (
     async (dispatch) => {
         try {
-            let result = await API.purchaseTickets(seatIds, showId)
+            let result = await API.purchaseTickets(seatsIds, showId)
             if (result.status === 200) {
-                dispatch(purchaseSeats(result.data.seats))
+                dispatch(purchaseSeats(result.data.ticket))
             }
         }
         catch (e) {
+            console.log(e)
             dispatch(setAuthError())
         }
     }
@@ -380,6 +382,21 @@ export const cancelOperation = () => (
             }
         }
         catch (e) {
+            console.log(e)
+            dispatch(setAuthError())
+        }
+    }
+);
+export const fetchUserData = () => (
+    async (dispatch) => {
+        try {
+            let result = await API.fetchUserData()
+            if (result.status === 200) {
+                dispatch(setAccountData(result.data))
+            }
+        }
+        catch (e) {
+            console.log(e)
             dispatch(setAuthError())
         }
     }
@@ -393,6 +410,7 @@ export const updateUserData = (userData) => (
             }
         }
         catch (e) {
+            console.log(e)
             dispatch(setAuthError())
         }
     }
@@ -407,6 +425,7 @@ export const fetchUsers = () => (
             }
         }
         catch (e) {
+            console.log(e)
             dispatch(setAuthError())
         }
     }
@@ -420,6 +439,7 @@ export const uploadEvent = (eventData) => (
             }
         }
         catch (e) {
+            console.log(e)
             dispatch(setAuthError())
         }
     }
@@ -433,6 +453,7 @@ export const removeUser = (userId) => (
             }
         }
         catch (e) {
+            console.log(e)
             dispatch(setAuthError())
         }
     }
@@ -446,6 +467,7 @@ export const removeEvent = (showId) => (
             }
         }
         catch (e) {
+            console.log(e)
             dispatch(setAuthError())
         }
     }

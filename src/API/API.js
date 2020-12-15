@@ -26,8 +26,8 @@ export const API = {
     getSingleEvent(showId) {
         return instance.get(`/event?show_id=${ showId }`)
     },
-    purchaseTickets( seatIds, showId) {
-        return instance.post('/purchase', { seatIds, showId })
+    purchaseTickets( seatsIds, showId) {
+        return instance.post('/purchase', { seatsIds, showId })
     },
     cancelOrder() {
         return instance.delete(`/canceling`)

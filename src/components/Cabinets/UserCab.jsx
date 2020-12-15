@@ -4,7 +4,7 @@ import {connect} from "react-redux";
 import {
     logOut,
     deleteAccount,
-    updateUserData, fetchCards
+    updateUserData, fetchCards, fetchUserData, cancelOperation
 } from "../../redux/jogReducer";
 import {Redirect} from "react-router";
 import {NavLink} from "react-router-dom";
@@ -18,6 +18,7 @@ import Card from "./Subcomponents/Card";
 class UserCab extends React.Component {
     componentDidMount() {
         this.props.fetchCards()
+        this.props.fetchUserData()
     }
 
     state = {
@@ -29,6 +30,19 @@ class UserCab extends React.Component {
         },
     }
 
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (prevProps.accountData.username !== this.props.accountData.username){
+            this.setState({
+                isEditMode: false,
+                userData: {
+                    username: this.props.accountData.username,
+                    email: this.props.accountData.email,
+                    password: this.props.accountData.password
+                },
+            }, () => {console.log(this.state)})
+        }
+    }
+
     toggleEditMode = () => {
         this.setState(() => ({isEditMode: !this.state.isEditMode}))
     }
@@ -37,7 +51,8 @@ class UserCab extends React.Component {
     }
 
     render() {
-        const cardsArray = this.props.cards.map(c => <Card {...c}/>)
+        const cardsArray = this.props.cards[0] ? this.props.cards.map(c => <Card {...c}/>) : null
+        console.log(this.props)
         const ticketsArray = this.props.accountData.orders.map(t => <Order {...t}/>)
         if (!this.props.isSession) return <Redirect to={'/login'}/>;
         return (
@@ -57,7 +72,7 @@ class UserCab extends React.Component {
                 </div>
                 <div className={style.ordersSection}>
                     {ticketsArray}
-                    <NegativeButton>Cancel Orders</NegativeButton>
+                    <NegativeButton onClick={this.props.cancelOperation}>Cancel Orders</NegativeButton>
                 </div>
                 <div className={style.cardSection}>
                     {cardsArray}
@@ -114,5 +129,7 @@ export default connect(mapStateToProps, {
     fetchCards,
     logOut,
     deleteAccount,
-    updateUserData
+    updateUserData,
+    fetchUserData,
+    cancelOperation
 })(UserCab)
