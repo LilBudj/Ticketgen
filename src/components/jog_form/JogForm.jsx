@@ -2,12 +2,10 @@ import React from "react";
 import style from "./JogForm.module.css"
 import FormDatePicker from "../utils/FormDatePicker";
 import {connect} from "react-redux";
-import {submitNewJog, updateJog} from "../../redux/jogReducer";
 import {NavLink} from "react-router-dom";
 import close from "../../assets/close.svg"
 
 class JogForm extends React.Component{
-
     componentDidMount() {
         if (this.props.fixed){
             this.setState({
@@ -99,6 +97,4 @@ class JogForm extends React.Component{
 }
 
 export default connect(null, {
-    submitNewJog,
-    updateJog
 })(JogForm)

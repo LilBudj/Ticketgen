@@ -1,0 +1,105 @@
+@startuml
+actor Пользователь
+boundary "Страница регистрации"
+boundary "Страница авторизации"
+boundary "Афиша мероприятий"
+boundary "Страница мероприятия"
+boundary "Банковская карта"
+boundary "Страница управления аккаунтом"
+control AccountController
+control EventController
+control BankCardController
+control SeatsController
+database EventsDb
+
+'Регистрация'
+Пользователь -> "Страница регистрации" : Регистрация
+activate Пользователь
+activate "Страница регистрации"
+opt "Данные верны"
+    "Страница регистрации" -> AccountController : Данные о пользователе
+    activate AccountController
+else "Данные неверны"
+    "Страница регистрации" <- AccountController : Исправление введенных данных
+    deactivate "Страница регистрации"
+end
+AccountController -> EventsDb : Добавить пользователя в БД
+activate EventsDb
+AccountController <-- EventsDb : Вернуть данные о пользователе
+deactivate EventsDb
+AccountController --> "Афиша мероприятий" : Отправить на страницу
+activate "Афиша мероприятий"
+deactivate AccountController
+deactivate "Афиша мероприятий"
+deactivate Пользователь
+
+'Авторизация'
+Пользователь -> "Страница авторизации" : Войти
+activate Пользователь
+activate "Страница авторизации"
+opt "Данные верны"
+    "Страница авторизации" -> AccountController : Данные о пользователе
+    activate AccountController
+else "Данные неверны"
+    "Страница авторизации" <-- AccountController : Обновить введенные данные
+    deactivate "Страница авторизации"
+end
+AccountController -> EventsDb : Найти пользователя
+activate EventsDb
+AccountController <-- EventsDb : Вернуть данные о пользователе
+deactivate EventsDb
+AccountController --> "Афиша мероприятий" : Отправить на страницу
+activate "Афиша мероприятий"
+deactivate AccountController
+deactivate "Афиша мероприятий"
+deactivate Пользователь
+
+'Показать мероприятие'
+Пользователь -> Мероприятие : Показать мероприятие
+activate Пользователь
+Мероприятие -> EventController : Обработать событие
+activate Мероприятие
+EventController -> EventsDb : Запрос на получение мероприятия
+activate EventController
+activate EventsDb
+EventController <-- EventsDb : Вернуть мероприятие
+deactivate EventsDb
+EventController --> Мероприятие : Загрузить страницу
+deactivate EventController
+deactivate Мероприятие
+
+opt Пользователь авторизировался
+    'Добавление банковской карты'
+    Пользователь -> BankCardController : Запрос на добавление банковской карты
+    BankCardController -> EventsDb : Добавить банковскую карту в БД
+    BankCardController -> Пользователь : Привязать карту к пользователю
+    activate BankCardController
+    activate EventsDb
+    deactivate BankCardController
+    deactivate EventsDb
+
+    'Удаление карты'
+    Пользователь -> BankCardController : Запрос на удаление банковской карты
+    BankCardController -> EventsDb : Удалить банковскую карту из БД
+    BankCardController -> Пользователь : Отвязать карту от пользователя
+    activate BankCardController
+    activate EventsDb
+    deactivate BankCardController
+    deactivate EventsDb
+    deactivate Пользователь
+
+    'Приобрести билеты'
+    Пользователь -> BankCardController: Запрос на банковскую операцию
+    Пользователь -> SeatsController: Запрос на закрытие свободного места
+    activate Пользователь
+    SeatsController -> EventsDb : Добавить занятое место в БД
+    EventsDb -> Пользователь : Получение данных о купленном билете
+    activate BankCardController
+    activate SeatsController
+    activate EventsDb
+    deactivate BankCardController
+    deactivate SeatsController
+    deactivate EventsDb
+    deactivate Пользователь
+end
+@enduml

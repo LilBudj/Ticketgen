@@ -1,75 +1,48 @@
 import React, {useState} from "react";
 import style from "./JogNote.module.css"
-import jog from "../../assets/jog-icon.svg"
-import Menu from "@material-ui/core/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import SettingsIcon from "@material-ui/icons/Settings"
-import DeleteIcon from "@material-ui/icons/Delete"
-import ListItemText from "@material-ui/core/ListItemText";
-import JogForm from "../jog_form/JogForm";
+import show from "../../assets/theatre_show.png"
+import {NavLink} from "react-router-dom";
+import LoadButton from "../utils/LoadButton";
+import Fade from "react-reveal";
 
 const JogNote = (props) => {
 
-    const [anchor, setAnchor] = useState(null);
+    const [element, setExtraElement] = useState(false);
     const [isEditMode, setEditMode] = useState(false);
 
-    const handleMenuClose = () => {
-        setAnchor(null);
+    const inEventHover = () => {
+        setExtraElement(true);
     };
 
-    const deleteSubmit = () => {
-        handleMenuClose();
-        props.submitJogDelete(props.id, props.user_id)
+    const outEventHover = () => {
+        setExtraElement(false);
     };
 
-    let date = new Date(props.date * 1000);
+    let date = new Date(props.startDate);
 
     return(
-        !isEditMode ? <div className={style.jogContainer}>
+        <div className={style.jogContainer}
+             onMouseEnter={inEventHover}
+             onMouseLeave={outEventHover}>
+            <div className={style.showName}>{props.name}</div>
             <img
-                onClick={(e) => setAnchor(e.currentTarget)}
                 className={style.jogIcon}
-                src={jog}
+                src={show}
                 alt={'icon'}
             />
-            <Menu
-                open={!!anchor}
-                anchorEl={anchor}
-                onClose={handleMenuClose}
-            >
-                <MenuItem onClick={() => setEditMode(true)}>
-                    <ListItemIcon>
-                        <SettingsIcon fontSize={'small'}/>
-                    </ListItemIcon>
-                    <ListItemText primary={'Edit'}/>
-                </MenuItem>
-                <MenuItem onClick={deleteSubmit}>
-                    <ListItemIcon>
-                        <DeleteIcon fontSize={'small'}/>
-                    </ListItemIcon>
-                    <ListItemText primary={'Delete'}/>
-                </MenuItem>
-            </Menu>
             <div className={style.jogInfo}>
                 <div className={style.date}>
                     {date.toLocaleDateString()}
                 </div>
-                <div>
-                    <span className={style.sign}>Speed:</span>
-                    <span className={style.display}>{Math.ceil(+props.distance * 60 / +props.time * 1000)/1000} kmh</span>
-                </div>
-                <div>
-                    <span className={style.sign}>Time:</span>
-                    <span className={style.display}>{props.time} min</span>
-                </div>
-                <div>
-                    <span className={style.sign}>Distance:</span>
-                    <span className={style.display}>{props.distance} km</span>
-                </div>
+                {element &&
+                    <Fade bottom>
+                    <div className={style.buyTicket}>
+                        <NavLink to={`/scene/${props.showId}`}><LoadButton>Buy Ticket</LoadButton></NavLink>
+                    </div>
+                    </Fade>
+                }
             </div>
         </div>
-        : <JogForm fixed setEditMode={setEditMode} setAnchor={setAnchor} {...props}/>
     )
 };
 

@@ -10,6 +10,8 @@ import {connect} from "react-redux";
 import {toggleFilter} from "../../redux/jogReducer";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
+import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+import FilterListIcon from "@material-ui/icons/FilterList"
 
 const Header = (props) => {
 
@@ -28,15 +30,14 @@ const Header = (props) => {
                 <img className={style.logoImg} src={headerLogo} alt={'logo'}/>
             </div>
             <div className={style.navbar}>
-                <NavLink className={style.link} activeClassName={style.activeLink} to={'/jogs'}>
-                    JOGS
-                </NavLink>
-                <NavLink className={style.link} activeClassName={style.activeLink} to={'/info'}>
-                    INFO
-                </NavLink>
-                <NavLink className={style.link} activeClassName={style.activeLink} to={'/contact'}>
-                    CONTACT US
-                </NavLink>
+                {props.isSession &&
+                <NavLink className={style.link} activeClassName={style.activeLink} to={'/events'}>
+                    EVENTS
+                </NavLink>}
+                {props.isSession &&
+                    <NavLink className={style.link} activeClassName={style.activeLink} to={'/user'}>
+                    <AccountCircleIcon fontSize={'large'}/>
+                </NavLink>}
                 <img
                     className={style.mobileNav}
                     src={expand}
@@ -49,33 +50,33 @@ const Header = (props) => {
                     onClose={() => expandNav(false)}
                 >
                     <MenuItem>
-                        <NavLink className={style.expandedLink} activeClassName={style.expandedActiveLink} to={'/jogs'}>
-                        JOGS
+                        <NavLink className={style.expandedLink} activeClassName={style.expandedActiveLink} to={'/events'}>
+                        EVENTS
                     </NavLink>
                     </MenuItem>
                     <MenuItem>
-                        <NavLink className={style.expandedLink} activeClassName={style.expandedActiveLink} to={'/info'}>
-                        INFO
-                    </NavLink>
-                    </MenuItem>
-                    <MenuItem>
-                        <NavLink className={style.expandedLink} activeClassName={style.expandedActiveLink} to={'/contact'}>
-                        CONTACT US
+                        <NavLink className={style.expandedLink} activeClassName={style.expandedActiveLink} to={'/user'}>
+                            <AccountCircleIcon fontSize={'large'}/>
                     </NavLink>
                     </MenuItem>
                 </Menu>
-                <img
-                    onClick={props.toggleFilter}
+                <div onClick={props.toggleFilter}>
+                    {props.isSession &&
+                        <FilterListIcon
                     className={style.filterImg}
-                    src={filter}
-                    alt={'filter'}
-                />
+                    fontSize={'large'}
+                />}
+                </div>
             </div>
         </div>
             </MuiPickersUtilsProvider>
     )
 };
 
-export default connect(null, {
+let mapStateToProps = (state) => ({
+    isSession: state.isSession
+})
+
+export default connect(mapStateToProps, {
     toggleFilter
 })(Header)

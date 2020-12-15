@@ -1,12 +1,11 @@
 import {Button, withStyles} from '@material-ui/core'
 
-const LoadButton = withStyles({
+const SubmitButton = withStyles({
     root: {
         textTransform: 'none',
         padding: '6px 12px',
+        color: "white",
         marginBottom: '6vh',
-        backgroundColor: '#4444dd',
-        color: '#eee',
         fontSize: '16px',
         fontFamily: [
             'San Frans',
@@ -15,4 +14,4 @@ const LoadButton = withStyles({
     }
 })(Button);
 
-export default LoadButton
+export default SubmitButton

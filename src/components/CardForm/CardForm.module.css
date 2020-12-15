@@ -1,0 +1,73 @@
+.cardsStack{
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+}
+
+.window{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(15deg, #221112, #dd3333);
+    border-radius: 44px;
+    width: 583px;
+    height: 369px;
+    font-family: "San Frans", sans-serif;
+}
+
+.fieldStack{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 60%;
+    width: 65%;
+}
+
+.inputField{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.fieldName{
+    color: white;
+}
+
+.jogInput{
+    outline: none;
+    border: none;
+    width: 70%;
+    height: 30px;
+    border-radius: 7px;
+    box-shadow: 0 0 5px #555;
+    font-weight: 700;
+    font-size: 14px;
+}
+
+.jogSubmit{
+    outline: none;
+    border-radius: 25px;
+    border: 2px solid white;
+    background-color: #7ed321;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 47px;
+    height: 42px;
+    width: 320px;
+}
+
+@media screen and (max-width: 600px){
+    .window{
+        width: 300px;
+        height: 228px;
+    }
+    .jogInput{
+        width: 50%;
+        height: 24px;
+    }
+    .jogSubmit{
+        width: 190px;
+        height: 34px;
+        margin-bottom: 28px;
+    }
+}

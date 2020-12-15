@@ -7,31 +7,17 @@ import HeaderDatePicker from "../utils/HeaderDatePicker";
 import sad from "../../assets/nothing.svg"
 import add from "../../assets/addJog.svg"
 import {connect} from "react-redux";
-import {displayExtraJogs, fetchJogs, setFromDate, setToDate, submitJogDelete} from "../../redux/jogReducer";
+import {fetchEvents, setFromDate, setToDate} from "../../redux/jogReducer";
 import {NavLink, Redirect} from "react-router-dom";
 import LoadButton from "../utils/LoadButton";
 
-class JogContainer extends React.Component{
-
+class EventsContainer extends React.Component{
     componentDidMount() {
-        this.props.fetchJogs();
-        if(this.props.jogsToDisplay.length < 20) {
-            let jogsChunk = this.props.jogs.slice(this.props.jogs.length - 20, this.props.jogs.length);
-            jogsChunk.reverse();
-            this.props.displayExtraJogs(jogsChunk)
-        }
+        this.props.fetchEvents();
     }
 
-    loadExtraJogs = () => {
-        let jogsChunk = this.props.jogs
-            .slice(this.props.jogs.length - (this.props.jogsToDisplay.length + 20),
-                this.props.jogs.length - this.props.jogsToDisplay.length);
-        jogsChunk.reverse();
-        this.props.displayExtraJogs(jogsChunk)
-    };
-
     render() {
-        let jogsArray = this.props.jogsToDisplay.map(j => {
+        let eventsArray = this.props.events.map(j => {
             if (this.props.filter.isFilter) {
                 if (Date.parse(this.props.filter.fromDate) < (j.date * 1000) && Date.parse(this.props.filter.toDate) > (j.date * 1000)) {
                     return <JogNote {...j} submitJogDelete={this.props.submitJogDelete} key={j.id}/>
@@ -40,9 +26,8 @@ class JogContainer extends React.Component{
             else return <JogNote {...j} submitJogDelete={this.props.submitJogDelete} key={j.id}/>
         });
 
-        if (this.props.jogs.length && !jogsArray.length) return <Redirect to={'/login'}/>;
-
-        return(
+        if (!this.props.isSession) return <Redirect to={'/login'}/>
+        else return(
             <MuiPickersUtilsProvider utils={DateFnsUtils}>
                 {this.props.filter.isFilter && <div className={style.postHeader}>
                     <div className={style.dateContainer}>
@@ -66,14 +51,13 @@ class JogContainer extends React.Component{
                         />
                     </div>
                 </div>}
-                {this.props.jogsToDisplay.length ? <div className={style.jogsContainer}>
-                    {jogsArray}
-                    <LoadButton
-                        onClick={this.loadExtraJogs}
-                    >
-                        Load more jogs
-                    </LoadButton>
-                    <NavLink to={'/form'}><img className={style.addButton} src={add} alt={'add'}/></NavLink>
+                {this.props.events.length ? <div className={style.jogsContainer}>
+                    {eventsArray}
+                    {/*<LoadButton*/}
+                    {/*    onClick={this.loadExtraJogs}*/}
+                    {/*>*/}
+                    {/*    Load more jogs*/}
+                    {/*</LoadButton>*/}
             </div>: <div className={style.emptyStack}>
                     <div className={style.emptyMessage}>
                         <img className={style.sadImage} src={sad} alt={'sad'}/>
@@ -89,15 +73,13 @@ class JogContainer extends React.Component{
 }
 
 let mapStateToProps = (state) => ({
-    jogs: state.jogs,
-    jogsToDisplay: state.jogsToDisplay,
-    filter: state.filter
+    events: state.events,
+    filter: state.filter,
+    isSession: state.isSession
 });
 
 export default connect(mapStateToProps, {
-    fetchJogs,
+    fetchEvents,
     setFromDate,
     setToDate,
-    displayExtraJogs,
-    submitJogDelete
-})(JogContainer)
+})(EventsContainer)

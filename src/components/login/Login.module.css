@@ -3,7 +3,7 @@
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    background-color: #e990f9;
+    background-color: mediumaquamarine;
     border-radius: 44px;
     width: 503px;
     height: 379px;
@@ -11,20 +11,19 @@
 }
 
 .bearImg{
-    width: 160px;
-    height: 150px;
-    margin-top: 77px;
+    width: 120px;
+    margin-top: 27px;
 }
 
 .logButton{
     outline: none;
     border-radius: 36px;
     border: 2px solid white;
-    background-color: #e990f9;
+    background-color: mediumaquamarine;
     color: white;
-    margin-bottom: 36px;
-    height: 60px;
-    width: 151px;
+    margin-bottom: 16px;
+    height: 40px;
+    width: 121px;
 }
 
 .textField{
@@ -36,4 +35,35 @@
     box-shadow: 0 0 5px #555;
     font-weight: 700;
     font-size: 14px;
+}
+
+.link{
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 700;
+    font-family: "San Frans", sans-serif;
+    color: white;
+}
+.link:hover{
+    text-decoration: none;
+    color: #ddd;
+    transition: .3s;
+}
+.activeLink{
+    text-decoration: underline;
+    color: white
+}
+
+@media screen and (max-width: 540px){
+    .window{
+        width: 290px;
+        height: 240px;
+    }
+    .bearImg{
+        width: 60px
+    }
+    .textField{
+        font-size: 12px;
+        height: 20px;
+    }
 }

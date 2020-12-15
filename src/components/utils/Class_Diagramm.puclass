@@ -1,0 +1,94 @@
+@startuml
+class Model {
+    - db: String
+    - schema: Object
+    + find(filter): Promise
+    + update(data): Promise
+}
+class User extends Model{
+    - collection: Object
+    - baseModelName: String
+    - schema: UserSchema
+    + save(userData): Promise
+    + delete(dbUserObject): Promise
+    + deleteOne(dbObject): Promise
+}
+class Card extends Model{
+    - collection: Object
+    - baseModelName: String
+    - schema: CardSchema
+    + save(cardData): Promise
+    + delete(dbCardObject): Promise
+    + deleteOne(dbObject): Promise
+}
+class Show extends Model{
+    - collection: Object
+    - baseModelName: String
+    - schema: ShowSchema
+    + save(showData): Promise
+    + delete(dbShowObject): Promise
+    + deleteOne(dbObject): Promise
+}
+class Seat extends Model{
+    - collection: Object
+    - baseModelName: String
+    - schema: SeatSchema
+    + save(seatData): Promise
+    + delete(dbSeatObject): Promise
+    + deleteOne(dbObject): Promise
+}
+class Ticket extends Model{
+    - collection: Object
+    - baseModelName: String
+    - schema: TicketSchema
+    + save(ticketData): Promise
+    + delete(dbTicketObject): Promise
+    + deleteOne(dbObject): Promise
+}
+
+class Schema{
+    - types: Array
+    - indexTypes: Array
+    - reserved: Object
+}
+
+class UsersSchema extends Schema{
+    - login: String
+    - Password: String
+    - Email: String
+    + remove(): void
+}
+class CardsSchema extends Schema{
+    - cardNumber: Number
+    - expirationDate: Date
+    - cvv: Number
+    + remove(): void
+}
+class ShowsSchema extends Schema{
+    - type: String
+    - sections: String
+    - startDate: Date
+    - availablePlaces: Number
+    + remove(): void
+}
+class SeatsSchema extends Schema{
+    - type: String,
+    - price: Number,
+    - number: Number,
+    - row: Number,
+    - status: Boolean
+    + remove(): void
+}
+class TicketsSchema extends Schema{
+    - id: Number,
+    - status: Boolean
+    + remove(): void
+}
+
+UsersSchema --o User
+CardsSchema --o Card
+ShowsSchema --o Show
+SeatsSchema --o Seat
+TicketsSchema --o Ticket
+
+@enduml

@@ -1,12 +1,21 @@
 .jogsContainer{
     display: flex;
-    align-items: center;
-    flex-direction: column;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    width: 70%;
+    min-height: 70vh;
+    margin-top: 146px;
 }
 .jogContainer{
     display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 70vh;
     width: 260px;
-    margin-bottom: 75px;
+}
+.showName{
+    text-align: center;
+    font-size: 24px;
 }
 .postHeader{
     display: flex;
@@ -19,13 +28,9 @@
 }
 
 .jogIcon{
-    width: 87px;
-    height: 87px;
+    width: 258px;
+    height: 153px;
     border-radius: 44px;
-}
-.jogIcon:hover{
-    box-shadow: 0 0 12px #e990f9;
-    transition: 0.4s;
 }
 .addButton{
     position: fixed;
@@ -39,15 +44,16 @@
     box-shadow: 0 0 7px #7ed321;
     transition: 0.3s;
 }
+.buyTicket{
+    margin-top: 30px;
+}
 
 .jogInfo{
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
     justify-content: space-between;
     font-family: "San Frans", sans-serif;
-    margin-left: 46px;
-    font-size: 16px;
     height: 90px;
 }
 
@@ -97,7 +103,9 @@
 }
 
 .date{
-    color: #dddddd
+    text-align: center;
+    font-size: 24px;
+    color: #444444
 }
 .display{
     color: #eeeeee;

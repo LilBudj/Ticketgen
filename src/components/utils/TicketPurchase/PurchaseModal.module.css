@@ -1,0 +1,33 @@
+.window{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200%;
+    width: 100vw;
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.3);
+}
+.overlay{
+    position: fixed;
+    top: 35vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    height: 30vh;
+    width: 30%;
+    background-color: white;
+    border-radius: 4vh;
+}
+.message{
+    font-size: 24px;
+    font-weight: 700;
+    font-family: "San Frans", sans-serif;
+    text-align: center;
+    margin: 6vh 10% 10%;
+}
+.pannel{
+    display: flex;
+    justify-content: space-evenly;
+    width: 70%
+}
