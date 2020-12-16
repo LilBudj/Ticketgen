@@ -33,6 +33,7 @@ class Login extends React.Component {
                             onChange={(e) => {
                                 this.props.setPassword(e.currentTarget.value)
                             }}
+                            type={'password'}
                             placeholder={'Password'}
                         />
                         <button
@@ -53,6 +54,7 @@ class Login extends React.Component {
                             onChange={(e) => {
                                 this.props.setSecret(e.currentTarget.value)
                             }}
+                            type={'password'}
                             placeholder={'secret uuid'}
                         />
                         <button

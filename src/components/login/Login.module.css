@@ -54,6 +54,14 @@
     color: white
 }
 
+.errorMessage{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 70%;
+    border: 2px solid #ee3333;
+}
+
 @media screen and (max-width: 540px){
     .window{
         width: 290px;

@@ -18,6 +18,8 @@ class SignUp extends React.Component {
         }
     }
 
+    regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
     render() {
         if (this.props.isSession) return <Redirect to={'/events'}/>;
         return (
@@ -31,15 +33,20 @@ class SignUp extends React.Component {
                 />
                 <input
                     className={style.textField}
+                    // style={(this.re.test(this.props.loginData.email)) ? {border: "1px solid #ee3333"} : {}}
                     value={this.props.loginData.email}
                     onChange={(e) => {this.props.setEmail(e.currentTarget.value)}}
                     placeholder={'Email'}
                 />
+                {/*{<div className={style.errorMessage}>*/}
+                {/*    Invalid email passed!*/}
+                {/*</div>}*/}
                 <input
                     className={style.textField}
                     value={this.props.loginData.password}
                     onChange={(e) => {this.props.setPassword(e.currentTarget.value)}}
                     placeholder={'Password'}
+                    type={'password'}
                 />
                 {/*<NavLink to={'/jogs'}>*/}
                 <button
