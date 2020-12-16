@@ -50,15 +50,9 @@ const initState = {
         fromDate: new Date(null),
         toDate: new Date()
     },
-    events: [
-        {id: 1, distance: 1, time: 1, date: 2020},
-        {id: 2, distance: 1, time: 1, date: 2020},
-        {id: 3, distance: 1, time: 1, date: 2020}
-        ],
+    events: [],
     seats: [],
-    cards: [
-        {cardNumber: 1488148814881488, cardholderName: "DOLBOEB", expirationDate: new Date(), cvv: 777}
-    ],
+    cards: [],
     users: []
 };
 
