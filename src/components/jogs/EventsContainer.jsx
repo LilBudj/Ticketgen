@@ -58,9 +58,6 @@ class EventsContainer extends React.Component{
                         <img className={style.sadImage} src={sad} alt={'sad'}/>
                         <div className={style.message}>Nothing is there</div>
                     </div>
-                    <button className={style.jogCreate}>
-                        Create your first jog
-                    </button>
                 </div>}
             </MuiPickersUtilsProvider>
         )
